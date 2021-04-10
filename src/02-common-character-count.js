@@ -15,11 +15,14 @@ function getCommonCharacterCount(s1, s2) {
 
   const getCollection = (str) => {
     const res = {};
-    str.split('').map((i) => res[i] = 0);
 
-    for (const key in res) {
-      str.split('').map((item) => (key === item ? res[item] += 1 : res));
-    }
+    str.split('').forEach((item) => {
+      if (res[item]) {
+        res[item] += 1;
+      } else {
+        res[item] = 1;
+      }
+    });
 
     return res;
   };
@@ -27,13 +30,11 @@ function getCommonCharacterCount(s1, s2) {
   const collectionS1 = getCollection(s1);
   const collectionS2 = getCollection(s2);
 
-  for (const keyS1 in collectionS1) {
-    for (const keyS2 in collectionS2) {
-      if (keyS1 === keyS2) {
-        count += Math.min(collectionS1[keyS1], collectionS2[keyS2]);
-      }
+  Object.keys(collectionS1).forEach((key) => {
+    if (collectionS2[key]) {
+      count += Math.min(collectionS1[key], collectionS2[key]);
     }
-  }
+  });
 
   return count;
 }
